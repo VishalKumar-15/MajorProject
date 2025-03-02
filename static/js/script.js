@@ -3,7 +3,7 @@ document.getElementById("uploadForm").addEventListener("submit", function (event
 
     let formData = new FormData();
     let fileInput = document.getElementById("imageInput").files[0];
-    
+
     if (!fileInput) {
         alert("Please select an image!");
         return;
@@ -22,27 +22,50 @@ document.getElementById("uploadForm").addEventListener("submit", function (event
             return;
         }
 
-        // Show image preview
-        let previewImage = document.getElementById("previewImage");
-        previewImage.src = data.image_path;
-        previewImage.style.display = "block";
+        // Extract probabilities and find the highest one
+        let probabilities = Object.values(data.predictions);
+        let maxProbability = Math.max(...probabilities); // Get the highest probability
 
-        // Display predictions
-        let resultContainer = document.getElementById("results");
-        let predictionList = document.getElementById("predictionList");
+        if (maxProbability >= 98) {
+            // Show image preview
+            let previewImage = document.getElementById("previewImage");
+            previewImage.src = data.image_path;
+            previewImage.style.display = "block";
 
-        predictionList.innerHTML = ""; // Clear previous results
+            // Display predictions
+            let resultContainer = document.getElementById("results");
+            let predictionList = document.getElementById("predictionList");
 
-        for (let [disease, confidence] of Object.entries(data.predictions)) {
-            let listItem = document.createElement("li");
-            listItem.innerHTML = `<b>${disease.replace("_", " ").toUpperCase()}</b>: ${confidence}%`;
-            predictionList.appendChild(listItem);
+            predictionList.innerHTML = ""; // Clear previous results
+
+            for (let [disease, confidence] of Object.entries(data.predictions)) {
+                let listItem = document.createElement("li");
+                listItem.innerHTML = `<b>${disease.replace("_", " ").toUpperCase()}</b>: ${confidence}%`;
+                predictionList.appendChild(listItem);
+            }
+
+            resultContainer.style.display = "block";
+        } else {
+            alert("The uploaded image does not seem to be a valid dog image. Please try again.");
+            document.getElementById("previewImage").style.display = "none";
+            document.getElementById("results").style.display = "none";
         }
-
-        resultContainer.style.display = "block";
-    }  )
+    })
     .catch(error => {
         alert("Something went wrong!");
         console.error("Error:", error);
     });
+});
+
+// Restrict file types to images
+document.getElementById("imageInput").addEventListener("change", function () {
+    let file = this.files[0]; // Get the selected file
+    if (file) {
+        let allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+        
+        if (!allowedTypes.includes(file.type)) {
+            alert("Invalid file type! Please upload an image (JPG, PNG, GIF).");
+            this.value = ""; // Clear the input field
+        }
+    }
 });

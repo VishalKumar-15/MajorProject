@@ -2,8 +2,10 @@
 venv/
 Lib/
 Include/
-Scripts/
+env/
+.idea
 pyvenv.cfg
+share/
 
 # Ignore compiled Python files
 __pycache__/
