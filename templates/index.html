@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload an Image for Disease Prediction</h2>
+
+        <div class="dog-container">
+            
+            <img src="{{ url_for('static', filename='images/dog_animation.gif') }}" alt="Animated Dog" class="animated-dog">
+        </div>
+        
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="imageInput" name="image" required>
+            <br><br>
+            <button type="submit">Predict</button>
+        </form>
+
+        <div id="preview">
+            <img id="previewImage" src="" alt="Uploaded Image" style="display:none;">
+        </div>
+
+        <div id="results" style="display:none;">
+            <h3>Prediction Results</h3>
+            <ul id="predictionList"></ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
