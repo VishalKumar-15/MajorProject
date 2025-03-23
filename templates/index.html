@@ -11,33 +11,41 @@
     <div class="container text-center">
         <h3>Upload an Image for Disease Prediction</h3>
 
-      <div class="row">
-
-         <div class="col-3">
+        <div>
             <div class="dog-container mt-5">
                 <img src="{{ url_for('static', filename='images/dog_animation.gif') }}" alt="Animated Dog" class="animated-dog">
             </div>
         
             <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="imageInput" name="image" accept="image/*" required>
+                <input  class="form-control form-control-sm" type="file" id="imageInput" name="image" accept="image/*" required>
                 <br><br>
-                <button type="submit">Predict</button>
+                <button type="submit" class="btn btn-primary">Predict</button>
             </form>
-        </div>
-        <div class="col-4"></div>
-        <div class="col-5">
-                <div id="preview">
-                    <img id="previewImage" src="" alt="Uploaded Image" style="display:none;">
-                </div>
 
-                <div id="results" style="display:none;">
-                    <h5>Prediction Results</h5>
-                    <ul id="predictionList"></ul>
+            <div class="modal fade" id="content" tabindex="-1" aria-labelledby="predictionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable custom-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="predictionModalLabel">Prediction Result</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="preview" class="mb-3">
+                                <img id="previewImage" src="" alt="Uploaded Image" class="img-fluid" style="display:none; max-width: 100%;">
+                            </div>
+
+                            <div id="results" style="display:none;">
+                                <h5 class="display-6">Prediction Results</h5>
+                                <ul id="predictionList" class="list-unstyled"></ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
